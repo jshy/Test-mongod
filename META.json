@@ -1,5 +1,5 @@
 {
-   "abstract" : "Blah blah blah",
+   "abstract" : "run a temporrary instance of MongoDB",
    "author" : [
       "Jesse Shy <jshy@cpan.org>"
    ],
@@ -46,6 +46,9 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.01"
+   "version" : "0.01",
+   "x_contributors" : [
+      "Jesse Shy <jesse@classmith.com>"
+   ]
 }
 
