@@ -46,6 +46,17 @@
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/jshy/Test-mongod/issues"
+      },
+      "homepage" : "https://github.com/jshy/Test-mongod",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/jshy/Test-mongod.git",
+         "web" : "https://github.com/jshy/Test-mongod"
+      }
+   },
    "version" : "0.01",
    "x_contributors" : [
       "Jesse Shy <jesse@classmith.com>"
