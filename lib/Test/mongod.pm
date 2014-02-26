@@ -2,9 +2,9 @@ package Test::mongod;
 
 our $VERSION = '0.01';
 
-use MooseX::AutoImmute;
 use File::Temp qw(tempdir);
 use Net::EmptyPort qw(empty_port wait_port);
+use Time::HiRes qw(sleep);
 
 has bind_ip => (
         is => 'ro',
@@ -76,6 +76,10 @@ sub stop {
 
         $sig ||= SIGTERM;
         kill $sig, $self->pid;
+
+        sleep 0.1;
+        waitpid $self->pid, 0;
+    
         return 1;
 }
 
@@ -84,8 +88,10 @@ sub DEMOLISH {
         $self->stop;
 }
 
+__PACKAGE__->meta->make_immutable();
 
 1;
+
 __END__
 
 =encoding utf-8
