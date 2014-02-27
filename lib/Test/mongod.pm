@@ -2,9 +2,34 @@ package Test::mongod;
 
 our $VERSION = '0.01';
 
+use Moose;
 use File::Temp qw(tempdir);
 use Net::EmptyPort qw(empty_port wait_port);
+use Config::ZOMG;
+use Hash::Merge qw(merge);
 use Time::HiRes qw(sleep);
+use POSIX qw(SIGTERM);
+use FindBin qw($Bin);
+
+has config => (
+        is => 'ro',
+        isa => 'HashRef',
+        clearer => 'clear_config',
+        predicate => 'has_config',
+);
+        
+
+sub _build_config {
+        my ($self, $path_to) = @_;
+        $path_to //= "$Bin/etc/mongod.conf";
+        
+        return unless -f $path_to;
+        
+        my $config = Config::ZOMG->open($path_to) or die "Counld not open config";
+        return $config ? $config : undef;
+        
+}
+
 
 has bind_ip => (
         is => 'ro',
@@ -21,7 +46,7 @@ has port => (
 has dbpath => (
         is => 'ro',
         isa => 'Str',
-        default => sub { tempdir(CLEANUP => $ENV{TEST_MONGOD_PRESERVE} ? undef : 1, ) },
+        default => sub { tempdir(CLEANUP => $ENV{TEST_MONGOD_PRESERVE} ? undef : 1 ) },
 );
 
 has mongod => (
@@ -53,14 +78,29 @@ sub _build_mongod {
         return $mongod;
 }
 
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $class = shift;
+    my $args = shift;
+    
+    my $config = (exists ${$args}{config}) ? $args->{config} : $class->_build_config($args->{config_file});
+     
+    my %args = %{ merge($args, $config) } if $config; 
+    $args{config} = $config if $config;
+    return $class->$orig(%args);
+};
+        
+    
+
 sub BUILD {
-        my $self = shift;
+        my $self = shift;       
         my $pid = fork;
         die "fork failed:$!" unless defined $pid;
 
         if ($pid == 0) {
-
-                my $logpath = $self->dbpath . '/mongo.log';
+                my $logfile = ($self->has_config && $self->config->{logfile}) ? $self->config->{logfile} : 'mongod.log';
+                my $logpath = $self->dbpath . "/$logfile";
+    
                 my $cmd = sprintf("%s --dbpath %s --port %u --logpath %s ", $self->mongod, $self->dbpath, $self->port, $logpath);
                 $cmd .= sprintf(" --bind_ip %s", $self->bind_ip) unless ($self->bind_ip eq '127.0.0.1');
                 $cmd .= ' --quiet' if $self->quiet;
@@ -152,6 +192,15 @@ The diorectory for the database server to put ts files. This defaults to a /tmp 
 =head2 pid
 
 Contains the pid of the forked child process.
+
+=head2 config
+
+a hashref of config options 
+you can give ether 
+    config => { } or 
+    config_file => 'relative/path/to/conf/file'
+
+config file must be something Config::Any recognizes. SEE EXAMPLE t/etc/mongo.conf
 
 =head1 AUTHOR
 
