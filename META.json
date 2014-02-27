@@ -36,6 +36,13 @@
       },
       "runtime" : {
          "requires" : {
+            "Config::ZOMG" : "0",
+            "File::Temp" : "0",
+            "FindBin" : "0",
+            "Hash::Merge" : "0",
+            "Net::EmptyPort" : "0",
+            "POSIX" : "0",
+            "Time::HiRes" : "0",
             "perl" : "5.008005"
          }
       },
@@ -57,7 +64,7 @@
          "web" : "https://github.com/jshy/Test-mongod"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_contributors" : [
       "Jesse Shy <jesse@classmith.com>"
    ]

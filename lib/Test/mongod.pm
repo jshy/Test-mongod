@@ -197,10 +197,13 @@ Contains the pid of the forked child process.
 
 a hashref of config options 
 you can give ether 
+
     config => { } or 
     config_file => 'relative/path/to/conf/file'
 
 config file must be something Config::Any recognizes. SEE EXAMPLE t/etc/mongo.conf
+if you have a t/etc/mongod.conf file then it will get picked up automatically
+NOTE: If you use config no config file gets read.
 
 =head1 AUTHOR
 
