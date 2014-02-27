@@ -1,6 +1,8 @@
 Revision history for Test-mongod
 
 {{$NEXT}}
+	- Removed MooseX::AutoImmute requirement
+	- Added config or config_file capacity
 
 0.01  2014-02-24 15:22:18 UTC
         - Initial release
