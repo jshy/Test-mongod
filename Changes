@@ -1,6 +1,8 @@
 Revision history for Test-mongod
 
 {{$NEXT}}
+
+0.03  2014-02-27 20:02:52 UTC
 	- Now ms windows enabled. Patch from Alexandr Ciornii (https://github.com/chorny)
 
 0.02  2014-02-27 02:55:58 UTC

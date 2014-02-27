@@ -64,9 +64,11 @@
          "web" : "https://github.com/jshy/Test-mongod"
       }
    },
-   "version" : "0.02",
+   "version" : "0.03",
    "x_contributors" : [
-      "Jesse Shy <jesse@classmith.com>"
+      "Alexandr Ciornii <alexchorny@gmail.com>",
+      "Jesse Shy <jesse@classmith.com>",
+      "jshy <jesse@holdtheplan.com>"
    ]
 }
 
