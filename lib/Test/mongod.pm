@@ -96,6 +96,7 @@ around BUILDARGS => sub {
 
 sub BUILD {
         my $self = shift;
+        return unless $self->mongod;
         my $pid = fork;
         die "fork failed:$!" unless defined $pid;
 
