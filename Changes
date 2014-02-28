@@ -1,6 +1,8 @@
 Revision history for Test-mongod
 
 {{$NEXT}}
+
+0.04  2014-02-28 13:34:04 UTC
 	- Fixed test failure if mongod not installed skip tests
 	- Added Alexandr Ciornii <alexchorny[at]gmail.com> to Authors list - made work on M$
 
