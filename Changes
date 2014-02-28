@@ -1,6 +1,8 @@
 Revision history for Test-mongod
 
 {{$NEXT}}
+	- Fixed test failure if mongod not installed skip tests
+	- Added Alexandr Ciornii <alexchorny[at]gmail.com> to Authors list - made work on M$
 
 0.03  2014-02-27 20:02:52 UTC
 	- Now ms windows enabled. Patch from Alexandr Ciornii (https://github.com/chorny)

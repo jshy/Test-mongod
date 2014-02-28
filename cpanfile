@@ -7,3 +7,4 @@ requires 'Hash::Merge';
 requires 'Time::HiRes';
 requires 'POSIX';
 requires 'FindBin';
+requires 'File::Which';
