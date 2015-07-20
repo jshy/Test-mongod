@@ -104,10 +104,10 @@ sub BUILD {
                 my $logfile = ($self->has_config && $self->config->{logfile}) ? $self->config->{logfile} : 'mongod.log';
                 my $logpath = $self->dbpath . "/$logfile";
     
-                my $cmd = sprintf("%s --dbpath %s --port %u --logpath %s ", $self->mongod, $self->dbpath, $self->port, $logpath);
-                $cmd .= sprintf(" --bind_ip %s", $self->bind_ip) unless ($self->bind_ip eq '127.0.0.1');
-                $cmd .= ' --quiet' if $self->quiet;
-                exec ( $cmd );
+                my @cmd = ($self->mongod, '--dbpath', $self->dbpath, '--port', $self->port, '--logpath', $logpath);
+                push @cmd, '--bind_ip', $self->bind_ip unless $self->bind_ip eq '127.0.0.1';
+                push @cmd, '--quiet' if $self->quiet;
+                exec @cmd;
         }
         until ( wait_port($self->port, 1) ) { sleep 1; }
         $self->pid($pid);
